@@ -1,3 +1,4 @@
+import json
 import asyncio
 
 from pydantic import BaseModel
@@ -30,7 +31,7 @@ def process(nit):
         element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
 
         with open('token.txt', 'w') as f:
-            f.write(element['value'])
+            f.write(json.dumps(element))
 
         sb.wait_for_element_visible('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit')
 
