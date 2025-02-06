@@ -23,10 +23,9 @@ def process(nit):
     with SB(uc=True) as sb:
         url = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces"
         sb.activate_cdp_mode(url)
-        sb.uc_gui_click_captcha()
-        sb.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+        # sb.uc_gui_click_captcha()
+        sb.cdp.gui_click_element('#g-recaptcha div')
 
-# vistaConsultaEstadoRUT:formConsultaEstadoRUT:hddToken
         element = sb.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
         logging.info(f"Token: {element}")
         
