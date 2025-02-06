@@ -1,5 +1,4 @@
 import asyncio
-import logging
 
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
@@ -7,7 +6,6 @@ from fastapi import FastAPI, HTTPException
 from seleniumbase import SB
 
 
-logging.basicConfig(level=logging.INFO)
 app = FastAPI()
 
 class Document(BaseModel):
@@ -31,8 +29,9 @@ def process(nit):
 
         element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
 
-        logging.info(f"Token: {element['value']}")
-        
+        with open('token.txt', 'w') as f:
+            f.write(element['value'])
+
         sb.wait_for_element_visible('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit')
 
         sb.type('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit', nit)
