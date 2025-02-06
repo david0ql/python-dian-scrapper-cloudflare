@@ -1,7 +1,7 @@
 import asyncio
 
-from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
 
 from seleniumbase import SB
 
@@ -21,10 +21,24 @@ def process(nit):
     with SB(uc=True) as sb:
         url = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces"
         sb.activate_cdp_mode(url)
-        sb.sleep(2)
         sb.uc_gui_click_captcha()
-        sb.sleep(2)
         sb.cdp.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+
+        #  wait until this element has value
+        # id="vistaConsultaEstadoRUT:formConsultaEstadoRUT:hddToken"
+
+        element = sb.find_element("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
+
+        if element.get_attribute("value") == "":
+            sb.cdp.gui_click_captcha()
+            sb.cdp.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+
+        element = sb.find_element("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
+
+        if element.get_attribute("value") == "":
+            raise HTTPException(status_code=500, detail="Captcha not resolved")
+
+        sb.wait_for_element_visible('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit')
 
         sb.type('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit', nit)
         
