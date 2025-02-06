@@ -26,7 +26,7 @@ def process(nit):
         # sb.uc_gui_click_captcha()
         sb.cdp.gui_click_element('#g-recaptcha div')
 
-        element = sb.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
+        element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
         logging.info(f"Token: {element}")
         
 
