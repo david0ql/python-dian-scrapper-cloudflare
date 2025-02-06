@@ -31,8 +31,7 @@ def process(nit):
 
         element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
 
-        if element.get("value") == "":
-            raise HTTPException(status_code=500, detail="Error getting token value")
+        logging.info(f"Token: {element['value']}")
         
         sb.wait_for_element_visible('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit')
 
