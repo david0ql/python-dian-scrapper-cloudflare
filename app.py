@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
@@ -6,6 +7,7 @@ from fastapi import FastAPI, HTTPException
 from seleniumbase import SB
 
 
+logging.basicConfig(level=logging.INFO)
 app = FastAPI()
 
 class Document(BaseModel):
@@ -22,7 +24,12 @@ def process(nit):
         url = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces"
         sb.activate_cdp_mode(url)
         sb.uc_gui_click_captcha()
-        sb.cdp.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+        sb.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+
+# vistaConsultaEstadoRUT:formConsultaEstadoRUT:hddToken
+        element = sb.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
+        logging.info(f"Token: {element}")
+        
 
         sb.wait_for_element_visible('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit')
 
