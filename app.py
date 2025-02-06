@@ -26,12 +26,21 @@ def process(nit):
         sb.uc_gui_click_captcha()
         sb.sleep(1.5)
         sb.cdp.gui_click_element('#g-recaptcha div')
-        sb.sleep(3.5)
+        sb.sleep(1.5)
 
-        element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
+        cantidad = 0
+        token = None
 
-        with open('token.txt', 'w') as f:
-            f.write(json.dumps(element))
+        while cantidad < 3:
+            element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
+            token = element.get("value")
+            if token:
+                break
+            cantidad += 1
+            sb.sleep(1)
+
+        if not token:
+            raise HTTPException(status_code=503, detail="Service Unavailable")
 
         sb.wait_for_element_visible('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit')
 
