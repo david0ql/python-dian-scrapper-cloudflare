@@ -29,9 +29,7 @@ def process(nit):
 
         element = sb.find_element("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
 
-        if element.get_attribute("value") == "":
-            sb.cdp.gui_click_captcha()
-            sb.cdp.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+        print(element.get_attribute("value"))
 
         element = sb.find_element("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
 
