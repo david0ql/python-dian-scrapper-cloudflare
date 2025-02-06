@@ -24,6 +24,8 @@ def process(nit):
         sb.sleep(2)
         sb.uc_gui_click_captcha()
         sb.sleep(2)
+        sb.cdp.gui_click_element('div[data-sitekey="0x4AAAAAAAg1Q7htA_ivIJbn"]')
+
         sb.type('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit', nit)
         
         sb.click('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:btnBuscar')
