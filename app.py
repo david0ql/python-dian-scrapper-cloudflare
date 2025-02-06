@@ -21,8 +21,9 @@ def process(nit):
     with SB(uc=True) as sb:
         url = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces"
         sb.activate_cdp_mode(url)
+        sb.sleep(2)
         sb.uc_gui_click_captcha()
-        
+        sb.sleep(2)
         sb.type('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:numNit', nit)
         
         sb.click('#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:btnBuscar')
