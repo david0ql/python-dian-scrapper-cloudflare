@@ -23,13 +23,14 @@ def process(nit):
     with SB(uc=True) as sb:
         url = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces"
         sb.activate_cdp_mode(url)
-        sb.sleep(2)
+        sb.sleep(2.5)
         sb.uc_gui_click_captcha()
-        sb.sleep(2)
+        sb.sleep(1.5)
         sb.cdp.gui_click_element('#g-recaptcha div')
+        sb.sleep(1.5)
 
         element = sb.cdp.get_element_attributes("#vistaConsultaEstadoRUT\\:formConsultaEstadoRUT\\:hddToken")
-        
+
         if element.get("value") == "":
             raise HTTPException(status_code=500, detail="Error getting token value")
         
